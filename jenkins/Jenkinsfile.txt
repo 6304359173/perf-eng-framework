@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Environment Check') {
+            steps {
+                echo 'Checking tools...'
+
+                bat 'java -version'
+                bat 'python --version'
+                bat 'node -v'
+                bat 'npm -v'
+            }
+        }
+
+        stage('Framework Structure') {
+            steps {
+                bat 'dir'
+                bat 'dir jmeter'
+                bat 'dir k6'
+                bat 'dir lighthouse'
+                bat 'dir k8s'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Base pipeline executed successfully'
+        }
+        failure {
+            echo 'Pipeline failed'
+        }
+    }
+}
