@@ -2,34 +2,37 @@ pipeline {
     agent any
 
     stages {
+
         stage('Environment Check') {
             steps {
-                echo 'Checking tools...'
-
                 bat 'java -version'
                 bat 'python --version'
-                bat 'node -v'
-                bat 'npm -v'
             }
         }
 
-        stage('Framework Structure') {
+        stage('Verify JMeter Files') {
             steps {
-                bat 'dir'
                 bat 'dir jmeter'
-                bat 'dir k6'
-                bat 'dir lighthouse'
-                bat 'dir k8s'
+                bat 'dir jmeter\\tests'
+            }
+        }
+
+        stage('Run JMeter Test') {
+            steps {
+                bat '''
+                C:\\JMeter\\apache-jmeter-5.6.3\\bin\\jmeter.bat ^
+                -n ^
+                -t jmeter\\tests\\test-plan.jmx ^
+                -l results.jtl ^
+                -e -o reports
+                '''
             }
         }
     }
 
     post {
-        success {
-            echo 'Base pipeline executed successfully'
-        }
-        failure {
-            echo 'Pipeline failed'
+        always {
+            archiveArtifacts artifacts: 'results.jtl, reports/**', allowEmptyArchive: true
         }
     }
 }
