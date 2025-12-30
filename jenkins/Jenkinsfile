@@ -24,7 +24,7 @@ pipeline {
                 -n ^
                 -t jmeter\\tests\\test-plan.jmx ^
                 -l results.jtl ^
-                -e -o reports
+                -e -f -o reports
                 '''
             }
         }
