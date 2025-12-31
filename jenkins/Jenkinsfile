@@ -23,9 +23,7 @@ pipeline {
                 C:\\JMeter\\apache-jmeter-5.6.3\\apache-jmeter-5.6.3\\bin\\jmeter.bat ^
                 -n ^
                 -t jmeter\\tests\\test-plan.jmx ^
-                -l results.jtl ^
-                -JinfluxdbUrl=http://localhost:8086 ^
-                -JinfluxdbDatabase=jmeter ^
+                -l results.jtl ^               
                 -Japplication=perf-eng-framework ^
                 -e -f -o reports
                 """
