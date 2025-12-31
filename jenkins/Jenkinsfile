@@ -23,8 +23,17 @@ pipeline {
                 C:\\JMeter\\apache-jmeter-5.6.3\\apache-jmeter-5.6.3\\bin\\jmeter.bat ^
                 -n ^
                 -t jmeter\\tests\\test-plan.jmx ^
-                -l results.jtl ^               
+                -l results.jtl ^
+                -JinfluxdbMetricsSender=org.apache.jmeter.visualizers.backend.influxdb.HttpMetricsSender ^
+                -JinfluxdbUrl=http://localhost:8086/write?db=jmeter ^
                 -Japplication=perf-eng-framework ^
+                -Jmeasurement=jmeter ^
+                -JsummaryOnly=false ^
+                -JsamplersRegex=.* ^
+                -Jpercentiles=90;95;99 ^
+                -JtestTitle=jenkins-jmeter-test ^
+                -JinfluxdbDatabase=jmeter ^
+                -Jjmeter.save.saveservice.autoflush=true ^
                 -e -f -o reports
                 """
             }
